@@ -33,8 +33,8 @@
 
 ### Technical (Market) Analyst — `technical-analyst.md`
 - Preamble: shared collaboration preamble (tool-calling variant).
-- Tools: `get_stock_data, get_indicators, get_verified_market_snapshot`
-  (verify exact tool tuple in the extracted file).
+- `{tool_names}`: `get_stock_data, get_indicators, get_verified_market_snapshot`
+- Tools bound: all three, date-clamped to `{current_date}`.
 - Output: technical report with price structure (current price,
   support/resistance, ATR) — this report is what grounds the trader's
   entry/stop levels (see debate-protocol.md).

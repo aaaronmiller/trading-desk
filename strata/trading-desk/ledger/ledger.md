@@ -134,3 +134,51 @@
 - Effect: new `harness/` tree (drafts only — no executable trading code, no
   secrets).
 - Outcome: drafts complete; validator re-passed.
+
+## [013] [audit-improve cycle 2] [decision]
+- What: Re-audit of cycle-1 artifacts. Removed a leftover hedge in
+  role-bindings.md (market analyst tool tuple now stated plainly after
+  verification against upstream TOOLS); confirmed venue-interfaces.md's
+  docs/open-questions.md reference matches the renamed file; confirmed no
+  live-trading code paths or secrets in any new file.
+- Why: cycle-1 artifacts must hold up under fresh eyes before more is built
+  on them.
+- Effect: harness/agents/role-bindings.md.
+- Outcome: done.
+
+## [014] [audit-improve cycle 2] [decision]
+- What: Implemented the cheapest keyless evals: `harness/tool-layer/
+  date_clamp.py` (pure-stdlib `as_of`, `clamp_window`, `in_window`,
+  `coverage_gaps`, `feed_status`) plus `test_date_clamp.py` — 10 fixture
+  checks mapping to EVAL-005 (no future-dated items), EVAL-006 (undated
+  items), EVAL-007 (coverage gaps labeled unavailable). All 10 pass with no
+  API keys, no network, no trading paths.
+- Why: the point-in-time discipline is the project's core integrity claim;
+  its cheapest testable surface is pure date logic, runnable now, long
+  before any vendor integration.
+- Effect: first executable harness code; paper/research-only.
+- Outcome: 10/10 tests green.
+
+## [015] [audit-improve cycle 2] [decision]
+- What: Researched and wrote `docs/vendor-matrix.md`: cost, rate limits,
+  and gotchas for Alpha Vantage, Yahoo/yfinance, FRED, SEC EDGAR, Alpaca
+  data, OANDA, Polymarket, Reddit, StockTwits, X, plus execution-venue
+  paper paths (Alpaca, OANDA, Kalshi) and practical takeaways. Notable
+  captures: Alpaca free data is IEX-only (backtests won't match live SIP);
+  legacy alpaca-trade-api defaults to the LIVE host; Reddit research via
+  Data API is a policy violation per Reddit's own help centre.
+- Why: Aaron needs this before choosing vendors for the backtest/paper
+  phases; it also feeds the open venue question (intent section 11).
+- Effect: docs/vendor-matrix.md (snapshot dated 2026-10-03, not a contract).
+- Outcome: done.
+
+## [016] [audit-improve cycle 2] [decision]
+- What: Chose NOT to do this cycle: runnable harness agent definitions
+  (actual LLM loops), venue adapter implementations, and the eval-manifest
+  runner. All are gated on intent/spec ratification and the scaffold play;
+  building them now would bake in unapproved assumptions. The DRAFT
+  interface specs and bindings stand in their place.
+- Why: the strata contract's own halt conditions say not to build downstream
+  of a DRAFT contract.
+- Effect: nothing built; recorded as deferred work for post-ratification.
+- Outcome: pending Aaron's ratification.
