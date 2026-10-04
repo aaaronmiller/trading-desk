@@ -1,0 +1,43 @@
+# Domain technology tokens for the trading-desk project.
+# One per line. Merged with the validator's shipped list.
+# These must not appear in intent.md or spec.md (human-authored layers).
+
+paperclip
+tradingagents
+trading-agents
+langgraph
+langchain
+openclaw
+claude code
+codex
+python
+node.js
+nodejs
+react
+postgres
+postgresql
+docker
+alpaca
+polymarket
+kalshi
+oanda
+ccxt
+binance
+coinbase
+kraken
+tradingview
+yahoo finance
+alpha vantage
+sec edgar
+fred
+stocktwits
+hetzner
+vps
+mcp
+api
+rest api
+websocket
+cli
+backtester
+# Note: "backtest" as a behavior is allowed in spec (it is the domain verb);
+# "backtester" as a tool noun is denied.
