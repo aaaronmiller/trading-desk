@@ -76,3 +76,61 @@
   untraced local-machine line from context section 6.
 - Effect: spec has 21 clauses; eval manifest has 21 evals; validator re-run.
 - Outcome: passed.
+
+## [009] [audit-improve cycle 1] [decision]
+- What: Audit pass re-verified all source SHAs via GitHub API (TA
+  1394a3f72aa4393e1a98f51b382434c4b4c2d972, paperclip
+  2a8a99e4a5f69aa803b3f10b982f583e75a87042, trading-firm template
+  f05237347dadb56f73598f6f10760ea0f7ab0a54 — all resolve) and spot-checked
+  extraction fidelity against upstream source.
+- Why: strata contract integrity; extraction fidelity is the foundation of
+  the extract play.
+- Effect: found 5 factual/fidelity defects; all fixed in this cycle.
+- Outcome: documented below.
+
+## [010] [audit-improve cycle 1] [decision]
+- What: Fixed extraction fidelity defect: the v2 extractor stamped the
+  shared collaboration preamble (including "You have access to the following
+  tools") on all 12 roles, but upstream only the analysts use it — and the
+  sentiment analyst uses a shortened variant with no tool-range wording
+  (upstream #1130: tool wording invites hallucinated tool calls). A v3
+  extractor now pulls each role's preamble from its own source; the 8
+  preamble-less roles (researchers, risk debators, trader, managers) carry a
+  "not used" note. Re-ran over source verified to match the pinned SHA.
+- Why: a harness copied from the v2 files would give tool-less agents a
+  false tool affordance — a prompt-injection-grade defect for the extract
+  play.
+- Effect: `sources/tradingagents/extract_roles.py` (v3, committed for
+  provenance); 11 of 12 agent files corrected; SOURCING.md documents the
+  per-role preamble rule.
+- Outcome: extraction verified faithful against upstream files.
+
+## [011] [audit-improve cycle 1] [decision]
+- What: Fixed remaining audit defects: completed two truncated tool entries
+  in tools.md (get_macro_indicators, get_prediction_markets) from upstream
+  docstrings; rewrote dataflows.md with accurate per-module vendor
+  descriptions (fixes the truncated alpha_vantage entry) and captured the
+  social-feed archival limitation for backtests; corrected Paperclip star
+  count 38k -> ~97k (verified 96,764 via GitHub API) in intent.md section 9;
+  corrected sources file count 22 -> 23 in README and standing.md; recorded
+  the TA license as Apache-2.0 (verified).
+- Why: factual accuracy of the curated sources.
+- Effect: sources/tradingagents/{tools.md,dataflows.md,SOURCING.md},
+  intent.md, README.md, standing.md.
+- Outcome: done.
+
+## [012] [audit-improve cycle 1] [decision]
+- What: Drafted the first harness-layer artifacts (all marked DRAFT, pending
+  ratification + scaffold play): `harness/agents/role-bindings.md`
+  (placeholder-to-harness bindings for all 12 roles, pipeline order per
+  SPEC-001..004), `harness/agents/debate-protocol.md` (opponent-opening
+  marker, report-or-absent, trader price grounding, structured-output
+  fallback, multilingual labeled lines), and
+  `harness/tool-layer/venue-interfaces.md` (clamp contract, common adapter
+  interface, per-class venues: Alpaca stocks/crypto paper, OANDA v20
+  practice, Kalshi demo; Polymarket read-only for US persons).
+- Why: the extract play's first input; keeps the harness prompt-authoring
+  work on the corrected sources.
+- Effect: new `harness/` tree (drafts only — no executable trading code, no
+  secrets).
+- Outcome: drafts complete; validator re-passed.

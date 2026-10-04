@@ -66,7 +66,7 @@ EVAL-ID, context in contact with spec, continuity via the ledger.
 
 ## Status
 
-Kickoff. Sources curated (22 files); contract authored and validated;
+Kickoff. Sources curated (23 files); contract authored and validated;
 no implementation yet. Three open questions for the operator:
 
 1. What quantitative bar clears the paper-to-live gate?

@@ -85,7 +85,7 @@ Consumer intent (the desk as an operating capability) and engineering intent
 | Solution | Strength | Weakness | Gap this fills |
 |----------|----------|----------|----------------|
 | Multi-agent trading research framework (open source, ~110k stars) | Role structure mirroring real firms; curated analyst prompts; point-in-time backtest discipline; monthly releases | Orchestration fused to a graph framework; no spend governance; no audit trail; simulated execution only | This project extracts its domain content (prompts, tools, evaluation discipline) and re-houses it in a thinner harness |
-| Agent organization platform (open source, MIT, ~38k stars) | Org charts, heartbeat scheduling, per-agent budgets with hard stops, approval workflows, replayable audit log | Ships no trading logic; its trading-desk template is community-built, not vetted | This project supplies the trading domain content the platform lacks, and uses its governance layer for the live-money problem |
+| Agent organization platform (open source, MIT, ~97k stars) | Org charts, heartbeat scheduling, per-agent budgets with hard stops, approval workflows, replayable audit log | Ships no trading logic; its trading-desk template is community-built, not vetted | This project supplies the trading domain content the platform lacks, and uses its governance layer for the live-money problem |
 | Lab-vs-firm analysis (this conversation) | Established the division: research framework as the lab, orchestration platform as the firm | Analysis only, no implementation | This project is the implementation of that division |
 
 Patterns adopted: specialist analyst roles with structured debate; adversarial

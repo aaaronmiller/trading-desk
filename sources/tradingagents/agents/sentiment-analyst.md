@@ -25,9 +25,11 @@ The report is a SentimentReport through structured output where the provider
 supports it and free text otherwise, so the band, score and confidence header
 reads the same across providers.
 
-## Collaboration preamble (shared across tool-using roles)
+## Collaboration preamble (this role's own, from its source)
 
-You are a helpful AI assistant, collaborating with other assistants. Use the provided tools to progress towards answering the question. If you are unable to fully answer, that's OK; another assistant with different tools will help where you left off. Execute what you can to make progress. Report what your tools support; another agent decides the trade. You have access to the following tools: {tool_names}. Today's date is {current_date}; treat it as 'now' for all analysis and tool-call date ranges. {instrument_context}
+You are a helpful AI assistant, collaborating with other assistants. Report what your tools support; another agent decides the trade. Today's date is {current_date}; treat it as 'now' for all analysis. {instrument_context} {NO_EXTERNAL_TOOLS}
+
+_Editor's note: upstream this role uses a shortened preamble with no tool-range wording, because its data is pre-fetched into the prompt; the source comment reads: "No tool-calling here: the data is pre-fetched into the prompt, so tool-range wording would only invite a hallucinated tool call (#1130)."_
 
 ## System prompt
 

@@ -48,7 +48,18 @@ Retrieve insider transaction information about a company.
 ## `get_macro_indicators(indicator, curr_date, look_back_days, trade_date)`
 
 Retrieve a macroeconomic indicator time series from FRED (Federal Reserve
+Economic Data): policy rates, Treasury yields, inflation, labor, and growth,
+for the US and, through FRED's mirrored series, the euro area. Friendly
+aliases accepted ('cpi', 'unemployment', 'fed_funds_rate', '10y_treasury',
+'yield_curve', 'real_gdp', 'vix', euro-area aliases) as well as raw FRED
+series IDs (e.g. 'CPIAUCSL'). Returns the series title, units, frequency,
+latest value, change over the window, and a recent observation table.
+Defaults to a 1-year trailing window when `look_back_days` is omitted.
 
 ## `get_prediction_markets(topic, limit, trade_date)`
 
 Retrieve live, market-implied probabilities for forward-looking events from
+prediction markets (Polymarket): Fed decisions, recession, elections,
+geopolitics, crypto. Returns the most-traded open markets matching the
+topic, each with its implied probability, traded volume, resolution date,
+and recent move. Defaults to 6 markets when `limit` is omitted.

@@ -9,11 +9,16 @@ tags: [strata, standing, system-owned]
 # Standing
 
 ## Where this is
-The trading-desk project is at kickoff. Sources are curated (22 files:
+The trading-desk project is at kickoff. Sources are curated (23 files:
 12 extracted role prompts, tool and dataflow inventories, backtest
-methodology, orchestration model summary, trading-firm template). The strata
-tree is authored and awaiting human ratification of intent.md and spec.md
-(both marked DRAFT). No implementation exists yet.
+methodology, orchestration model summary, trading-firm template).
+Cycle 1 of the audit-improve loop (2026-10-03) re-verified all source SHAs,
+fixed extraction fidelity (per-role preambles), completed truncated tool and
+dataflow entries, corrected stale facts (Paperclip star count, file count,
+TA license), and drafted the first harness-layer artifacts under `harness/`
+(role bindings, debate protocol, venue tool interfaces — all DRAFT).
+The strata tree is authored and awaiting human ratification of intent.md and
+spec.md (both marked DRAFT). No executable implementation exists yet.
 
 ## Last decisions that matter
 - [001] Kickoff from the approved lab-vs-firm plan; repo created.

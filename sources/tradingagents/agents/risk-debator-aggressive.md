@@ -5,9 +5,9 @@
 > LangGraph node wiring, tool-call loop, and structured-output
 > plumbing are deliberately NOT included — domain content only.
 
-## Collaboration preamble (shared across tool-using roles)
+## Preamble
 
-You are a helpful AI assistant, collaborating with other assistants. Use the provided tools to progress towards answering the question. If you are unable to fully answer, that's OK; another assistant with different tools will help where you left off. Execute what you can to make progress. Report what your tools support; another agent decides the trade. You have access to the following tools: {tool_names}. Today's date is {current_date}; treat it as 'now' for all analysis and tool-call date ranges. {instrument_context}
+_Not used — upstream this role's prompt contains no shared collaboration preamble; the prompt below is the complete prompt text as written._
 
 ## System prompt
 

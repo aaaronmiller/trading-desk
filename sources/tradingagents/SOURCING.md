@@ -2,7 +2,7 @@
 
 - Source repo: https://github.com/TauricResearch/TradingAgents
 - Commit fetched: `1394a3f72aa4393e1a98f51b382434c4b4c2d972` (2026-10-03)
-- License: check upstream repo (see upstream LICENSE)
+- License: Apache-2.0 (per upstream LICENSE; verified via GitHub API on 2026-10-03)
 - Paper: https://arxiv.org/abs/2412.20138
 
 ## What was taken (domain content only)
@@ -10,6 +10,10 @@
   (4 analysts, 2 researchers, 3 risk debators, trader, 2 managers), with
   runtime interpolations shown as `{placeholders}`. Shared collaboration
   preamble included once.
+- `extract_roles.py` — the AST-based extraction script (v3) that produced
+  `agents/`. It extracts each role's preamble from its own source: only the
+  tool-calling analysts use the shared preamble; the sentiment analyst uses
+  a shortened variant; the other eight roles have no preamble upstream.
 - `tools.md` — inventory of the 12 agent tools: name, signature, one-line
   purpose. No API wiring, caching, or retry logic.
 - `dataflows.md` — inventory of data vendors (Alpha Vantage, Yahoo, FRED,
