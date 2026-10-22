@@ -1,0 +1,46 @@
+# Genuine owner-stated names allowed in intent.md and spec.md, each with its justification.
+cloudflare      # owner-stated hosting platform (intake T1, T3, standing preferences); intent section 3 constraint 4
+langchain       # owner-named framework to avoid (pasted resource E); intent section 3 constraint 6
+langsmith       # owner-named framework to avoid (pasted resource E); intent section 3 constraint 6
+claude code     # owner-named harness target (intake T6); intent section 3 constraint 6, SPEC-014
+roo code        # owner-named harness target (intake T6); intent section 3 constraint 6, SPEC-014
+786110          # owner convention for partner messages (intake T5); SPEC-132
+# Project vocabulary harvested from the derived layer that is not technology: research report
+# identifiers (R01 to R16), Spec Kit user-story labels (US1 to US10), the feature identifier and
+# the names of this feature's own documents. They name evidence and artifacts, not implementation.
+r01
+r02
+r03
+r04
+r05
+r06
+r07
+r08
+r09
+r10
+r11
+r12
+r13
+r14
+r15
+r16
+us1
+us2
+us3
+us4
+us5
+us6
+us7
+us8
+us9
+us10
+001-autonomous-trading-firm
+intent.md
+spec.md
+plan.md
+research.md
+data-model.md
+tasks.md
+substrate.md
+quickstart.md
+traceability.md

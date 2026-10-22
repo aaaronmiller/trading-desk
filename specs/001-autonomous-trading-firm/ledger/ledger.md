@@ -182,3 +182,75 @@
   of a DRAFT contract.
 - Effect: nothing built; recorded as deferred work for post-ratification.
 - Outcome: pending Aaron's ratification.
+
+## [017] [0.1] [decision]
+- What: Specification preparation (spec-prep 2.4.0, Spec Kit native) for the autonomous trading firm, with the trading-desk repository as build root on branch 001-autonomous-trading-firm. The legacy pack moved to sources/legacy/strata-2026-10-03 as superseded source; this ledger moved with it and continues here.
+- Why: owner request T6 ("modify and improve the selected base project ... use the spec-prep skill ... restart session after spec-prep and before implementation").
+- Effect: specs/001-autonomous-trading-firm/ holds intent, spec, plan, substrate, ledger; legacy files unchanged in content.
+- Outcome: done.
+
+## [018] [1.1] [decision]
+- What: Confidence gate scored 86 percent weighted after the owners answered the preparation questions (money mode, success measures, partner mandate, repository). Hosting and cost ceiling were not answered; the default (paid edge plan, 25 dollars per month all in) is recorded as an assumption and as intent question 1.
+- Why: confidence-gate rubric; the answers raised problem, success and constraint dimensions above 75 percent; technical constraints stayed near 75 percent because hosting was unanswered.
+- Effect: intent.md section 12 carries three NEEDS CLARIFICATION markers with defaults.
+- Outcome: pending owner answers; defaults apply if unanswered.
+
+## [019] [1.2] [decision]
+- What: Owner message T9 recorded verbatim: aggressive mandate, a payout-scheme lifecycle case study (kept in the private intake record), exit timing from rate-of-change signals, manipulation awareness, a reference institution to study, educational daily reports, heat dials, a cross-family debate tribunal with a third-family judge, both-direction bets and linked predictions.
+- Why: new owner intent mid-preparation.
+- Effect: requirements v0.2.0 added HEAT, SCHEME, MANIP, TRIB, DIR, GRAPH, EDU, INST and MACRO; spec clauses SPEC-073 to SPEC-112 and SPEC-119 to SPEC-124 trace to it.
+- Outcome: done.
+
+## [020] [1.3] [decision]
+- What: Resolved the 27 conflicts found in the local intent inventory (R11 section 6) per the table in requirements v0.2.0: no human waits in the trading loop; the operator holds the live switch and ceilings, either owner pauses; leverage allowed with a 3x default ceiling; cloud from day one; the house book stops at 50 percent below its high-water mark and only the operator resumes it; the paper bar is guidance; the sandbox is separate from evaluation; Paperclip is an export target, not the runtime.
+- Why: the newest owner statements (T3, T4, T7, T9) and the MOU addendum govern older plans.
+- Effect: intent sections 3 and 6; SPEC-010, SPEC-076, SPEC-077, SPEC-133.
+- Outcome: done. Dissent preserved: R11 recommended telling agents the capital is virtual; the owner's directive (T6, "the agent is not to know") governs, and honesty is kept by deterministic owner-facing labels (SPEC-051, SPEC-052). What would change the ruling: evidence that concealment degrades audit honesty or seat behavior.
+
+## [021] [2.1] [outcome]
+- What: Research waves. Wave 1 (Haiku scouts R01 to R12) covered role packs, markdown skill packs, firm structure, harness formats, LLM trading literature, prediction-market calibration, market data and venues, strategy and persona library, hosting and providers, starred repositories, the local intent corpus and build-versus-adopt. Wave 2 (R13 to R16) covers payout-scheme lifecycle and clawback law, manipulation awareness, institutional practice and education, and debate tribunals with prediction graphs.
+- Why: owner request for deep and wide research with low-cost models, arXiv literature, prediction markets and mining existing projects.
+- Effect: research.md synthesizes them; intent section 10 holds prior art.
+- Outcome: partial verification. The shared web-search budget ran out mid-wave, a usage limit paused all scouts for about four hours, and the environment's egress policy blocked arXiv, most vendor documentation and every market-data host; affected claims are marked "(verify)" in the reports.
+
+## [022] [3.1] [decision]
+- What: Architecture derived as a greenfield, runtime-agnostic TypeScript core with a Cloudflare Workers run plane (Cron Triggers, deterministic Workflow instances, one Durable Object per book, D1 record, R2 artifacts), an in-house seat runner, and generated harness workspaces (plan CTX-001 to CTX-021).
+- Why: intent constraints 4 to 6 and the cost ceiling. R12 recommended adopting Paperclip as the operating base and forking Vibe-Trading; rejected as the runtime because harness-process heartbeats and an always-on server exceed the ceiling and a Python trading service conflicts with the owners' stack; Paperclip remains an export target and Vibe-Trading, LEAN, Nautilus, ai-hedge-fund and TradingAgents remain concept sources.
+- Effect: plan.md.
+- Outcome: pending build. Empirical memory: none deployed; research-based.
+
+## [023] [3.2] [decision]
+- What: Default model route profile "economy-api" (Muse Spark Contributor for bulk content without identifiers, Jev for typed decisions, DeepSeek V4 Flash for review and the second advocate, a Claude model as third-family judge); the subscription profile is excluded from the always-on loop unless the operator accepts its terms risk in a recorded change. Budget meter throttles to the ceiling.
+- Why: owner decision D-15 (Muse allowed for strategy), owner rule CO-13 (no unsettled consumer subscriptions in the always-on loop), R09 cost and terms findings.
+- Effect: plan CTX-009, CTX-010; intent question 2.
+- Outcome: pending owner answer to intent question 2.
+
+## [024] [4.1] [decision]
+- What: Initialized Spec Kit 1.2.3.dev0 with the Claude integration in the build root after confirming on a clean branch that it adds only .specify/ and .claude/skills/speckit-*.
+- Why: spec-prep requires native Spec Kit paths.
+- Effect: .specify/, .claude/skills/speckit-*.
+- Outcome: done.
+
+## [025] [4.2] [decision]
+- What: Constitution v1.0.0 with eleven principles (simulation by default; deterministic risk authority; point-in-time integrity; honest measurement; durable idempotent operation; one canonical definition many harnesses; cost discipline; security and untrusted input; evidence-gated delivery; owner sovereignty with humans outside the loop; lawful market conduct).
+- Why: owner statements T1 to T9, T7 "simulate; live code off", T6 gates request.
+- Effect: .specify/memory/constitution.md.
+- Outcome: done; ratified by launching the build.
+
+## [026] [4.3] [decision]
+- What: spec.md v1.0 with 162 EARS clauses and intent.md v1.0; held-out evaluations EVAL-001 to EVAL-162 stored outside the build repository in the intake folder's evaluator-only directory, mirrored to the default spec-prep store in this container.
+- Why: spec-prep rules 1 and 3.
+- Effect: spec.md, intent.md, external evals.
+- Outcome: done. Isolation is procedural only: anyone with access to the intake repository can read the evaluations.
+
+## [027] [4.4] [outcome]
+- What: The installed spec-prep validator fails to run (two identifiers that are not valid Python). A project copy patched only in those identifiers lives at .specify/gates/spec-prep-validate.py with the upstream hash in its header.
+- Why: a check never observed running is not a check.
+- Effect: validation uses the patched copy until the skill is fixed upstream.
+- Outcome: patched copy parses and runs; intent and spec audit passed.
+
+## [028] [4.5] [outcome]
+- What: The build environment's network policy blocks every market-data host and the deployment API; the owner was told which hosts and secrets to add.
+- Why: the fresh build session needs them for live smoke tests and deployment.
+- Effect: tests run on recorded fixtures; deployment falls back to a dry run with a documented manual step until the settings change.
+- Outcome: pending owner environment change.
