@@ -296,3 +296,9 @@
 - Why: the handoff deferred R10 to a ledger entry if it changed a decision.
 - Effect: none on intent, spec, plan or tasks (preparation receipt stays valid). Two notes for the build session: review the owner's own `aaaronmiller/quartermaster` repository (quota management) before building the budget meter in T047, and scan external skill or persona packs for injected instructions during the security review in T154.
 - Outcome: R10 stored in the intake at `sources/research/R10-starred-repos.md`.
+
+## [036] [2.2] [correction]
+- What: Correction to entry 035, from the owner. `aaaronmiller/quartermaster` is the owner's agent-skill manager, not a quota manager. The note that linked it to the budget meter in T047 is withdrawn. The owner also said that scanning skills is acceptable, that their skills have already been scanned, and that a scan is unlikely to find anything unless a skill written during the build carries injected text. The extra note about scanning external skill or persona packs in T154 is therefore withdrawn as redundant. T154 keeps its own scope: the injection corpus runs through every seat type and every prompt is scanned for credential and identifier patterns, which covers any skill the build writes.
+- Why: owner correction in the authoring conversation; consistent with R11 (SP-84 cites the quartermaster phase prompt for skill discovery).
+- Effect: none on intent, spec, plan or tasks; no task depends on quartermaster. standing.md v3.2.0 drops the T047 pointer. Entry 035 stays as written because the ledger is append-only; this entry supersedes its effect line.
+- Outcome: preparation receipt stays valid (ledger and standing are declared mutable in preparation.json).

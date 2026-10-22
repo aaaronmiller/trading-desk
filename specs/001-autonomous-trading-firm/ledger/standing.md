@@ -1,6 +1,6 @@
 ---
-date: 2026-10-22 08:37:18 UTC
-ver: 3.1.0
+date: 2026-10-22 17:31:10 UTC
+ver: 3.2.0
 author: Claude Code session (system-owned)
 model: Claude (Claude Code session)
 tags: [standing, continuity, autonomous-trading-firm, specification-prepared]
@@ -19,6 +19,7 @@ Specification preparation is complete for an autonomous, cloud-hosted AI trading
 - [031] Dissent preserved: research advised blocking scheme assets even in simulation; the owners' directive to simulate governs.
 - [033] Spec Kit analysis found no critical issues; high and medium findings were remediated.
 - [034] Task gates are mechanical: evidence checker, commit hook, preparation verifier and constitution sync check.
+- [035, 036] Research report R10 changed no decision. `aaaronmiller/quartermaster` is the owner's agent-skill manager; no task depends on it.
 
 ## Not yet decided
 
@@ -26,7 +27,6 @@ Specification preparation is complete for an autonomous, cloud-hosted AI trading
 - Model-route policy for the always-on loop (intent question 2). Default: economy-api profile.
 - Reference institution (intent question 3). Default: multi-manager platform with believability-weighted debate and a public-filings study stream.
 - Environment access for data hosts and deployment credentials (ledger 028). Default: recorded fixtures and a deployment dry run.
-- Research report R10 arrived after the handoff and changed no decision (ledger 035); review `aaaronmiller/quartermaster` before task T047.
 
 ## Next
 
