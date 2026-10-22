@@ -1,0 +1,39 @@
+# Domain technology and vendor tokens for this project. Any hit in intent.md or spec.md
+# (outside the Prior art section) is a layer leak. Extends the validator's static list.
+wrangler
+durable object
+durable objects
+cron trigger
+zod
+sveltekit
+drizzle
+miniflare
+workerd
+openrouter
+deepseek
+muse spark
+opencode
+jev
+litellm
+ccxt
+hetzner
+raspberry pi
+github pages
+coinbase
+kraken
+binance
+alpaca
+oanda
+polymarket
+kalshi
+manifold
+metaculus
+coingecko
+stooq
+frankfurter
+fred
+edgar
+yahoo
+pi durable
+pi-durable
+paperclip
