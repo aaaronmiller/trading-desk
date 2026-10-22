@@ -254,3 +254,39 @@
 - Why: the fresh build session needs them for live smoke tests and deployment.
 - Effect: tests run on recorded fixtures; deployment falls back to a dry run with a documented manual step until the settings change.
 - Outcome: pending owner environment change.
+
+## [029] [5a.1] [refinement]
+- What: Adversarial edge-case pass using wave-2 findings. Added SPEC-163 (regulator orders hard-block live trading with no override), SPEC-164 (venue-quality-adjusted volume), SPEC-165 (cascade and collateral depeg gate), SPEC-166 (launch eligibility and unlock gate), SPEC-167 (short-squeeze gate); tightened SPEC-108 so the scheme exit counts expected recovery, clawback exposure on withdrawn gains and withdrawal costs.
+- Why: R13 (enforcement record of the case study, clawback precedent, exit-rule derivation, liquidity arithmetic) and R14 (manipulation gates, the 10 October 2025 cascade and depegs).
+- Effect: spec.md v1.1.0, intent.md v1.1.0 (constraint 9, stories F1 and F2), plan.md v1.1.0 (CTX-015), external evaluations EVAL-108 refreshed and EVAL-163 to EVAL-167 added.
+- Outcome: validator passed after the change.
+
+## [030] [5a.2] [refinement]
+- What: Current-practice pass. Added SPEC-168 (baselines and monthly ablations), SPEC-169 (multiple-comparison control with resampling intervals), SPEC-170 (memory frozen per replay window with retrieval logs), SPEC-171 (judges in both side orders, equal length budgets, flip and length sensitivity), SPEC-172 (complexity budget on a time-split holdout), SPEC-173 (retrieval questions, spaced glossary review, idea-note form), SPEC-174 (daily external anchoring of chain heads); SPEC-121 now also states the daily value-at-risk budget equivalent of each target.
+- Why: R05 (look-ahead and memorization audits, ablations, sample floors, multiplicity), R15 (teaching practice, value-at-risk reading of the appetite), R16 (judge biases, debate versus voting, complexity evidence), and the owners' wish that history add veracity to predictions.
+- Effect: spec.md v1.1.0, plan.md v1.1.0 (CTX-011, CTX-019, build phases, clause coverage), external evaluations EVAL-121 refreshed and EVAL-168 to EVAL-174 added.
+- Outcome: validator passed after the change.
+
+## [031] [5a.3] [decision]
+- What: Preserved dissent. R13 recommended that the firm hold no position in scheme-classified assets at all, including in simulation, and exclude the owner brief's scheme strategies from the library. The owners' directive (T9: "we will likely simulate additional positions in it") governs simulation; live capital in scheme-classified assets stays restricted with an operator acknowledgment, and assets under an active regulator order are blocked outright (SPEC-163).
+- Why: owner sovereignty over simulated learning; R13's legal findings carried into live-path rules.
+- Effect: SPEC-109, SPEC-163; intent constraint 9.
+- Outcome: what would change the ruling: counsel advising that simulated analysis of a named scheme by the firm creates exposure for the owners, or an owner instruction to block simulation as well.
+
+## [032] [5a.4] [refinement]
+- What: Traceability and consistency pass. Generated traceability.md by script: source dispositions, legacy clause dispositions (21 of 21), working requirements to clauses (93 of 93; QA-02 mapped to governance), stories to clauses, and clause to evaluation, decision and tasks (174 of 174). Found RISK-01 untraced and traced it to SPEC-121. Depth check passed (requirement-like lines 83 in sources, 222 in intent and spec); average task description 108.9 words across 90 tasks.
+- Why: spec-prep Phase 5 lens 2 and Phase 5b.
+- Effect: traceability.md v1.0.0; spec.md SPEC-121 traces.
+- Outcome: no gaps remain at generation time.
+
+## [033] [5c.1] [outcome]
+- What: Spec Kit analysis (speckit-analyze) over spec, plan and tasks against the constitution: 0 critical, 3 high (cycle-count thresholds below the 99 percent floor; scheme heat minimum 7 versus heat-table tier at 9; house stop fixed at 50 percent versus the heat ladder), 2 medium (six thresholds without defaults; a sandbox review packet could carry mode words), 4 low. Remediated the high and medium findings and added the chain-anchor entity, under the owners' standing instruction to iterate and improve.
+- Why: preparation analysis gate; constitution X for the wording leak.
+- Effect: spec.md v1.2.0 (US1 thresholds, SPEC-077, SPEC-086, SPEC-092, SPEC-106, SPEC-109, SPEC-165 to SPEC-167 defaults, chain anchor entity), intent.md v1.2.0 (story A1, failure 5), tasks.md v1.1.0 (T043 threshold, T073 neutral labels), evaluations EVAL-077 and EVAL-109 updated.
+- Outcome: validator passed after remediation; low findings left as recorded (overlaps intended, T190 placement explicit).
+
+## [034] [4.6] [decision]
+- What: Activated mechanical task gates for the fresh session: `.specify/gates/check-task-evidence.py` (refuses a checked task without an evidence record and ledger mention), `hook-guard-commit.py` (Claude Code PreToolUse hook that blocks `git commit` while the evidence gate fails), `verify-preparation.py` (session-start receipt check), `check-constitution-sync.py` (CLAUDE.md copy equals the canonical constitution; plan check lists all 11 principles). AGENTS.md carries the read order and gates; CLAUDE.md imports it and inlines a generated copy of the constitution.
+- Why: owner request for constitutionally enforced gates in the task list, active after restart; gate-implement guidance on compaction survival and file cross-checks.
+- Effect: `.specify/gates/`, `.claude/settings.json`, AGENTS.md, CLAUDE.md.
+- Outcome: each gate was shown to fail on a planted violation and pass on the real tree.

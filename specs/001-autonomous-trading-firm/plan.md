@@ -1,6 +1,6 @@
 ---
 date: 2026-10-21 16:40:00 UTC
-ver: 1.0.0
+ver: 1.1.0
 author: Claude Code session (system-derived)
 model: Claude (Claude Code session)
 tags: [plan, architecture, derived, autonomous-trading-firm, cloud, durable-agents]
@@ -50,7 +50,7 @@ Build a 32-seat autonomous investment firm whose canonical definition (seats, sk
 | VI. One Canonical Firm Definition, Many Harnesses | PASS | PASS | `firm/` is canonical; `packages/compilers` generates every harness workspace with source hashes and a drift check; no agent framework dependency (CTX-016). |
 | VII. Cost Discipline | PASS | PASS | Budget meter on every call, throttle policy with reserved seats, routes in `firm/routes/models.yaml` only (CTX-009, CTX-010). |
 | VIII. Security and Untrusted Input | PASS | PASS | Untrusted-content envelope, tool authority classes, PBKDF2 owner auth, secrets only in Worker secrets, license checks on dependencies (CTX-018). |
-| IX. Evidence-Gated Delivery | PASS | PASS | Every task in `tasks.md` names gate commands; `.specify/gates/check-task-evidence.ts` refuses completion without evidence; ledger and standing updated per task (CTX-020). |
+| IX. Evidence-Gated Delivery | PASS | PASS | Every task in `tasks.md` names gate commands; `.specify/gates/check-task-evidence.py` refuses completion without evidence; ledger and standing updated per task (CTX-020). |
 | X. Owner Sovereignty with Humans Outside the Loop | PASS | PASS | No workflow step awaits owner input; owner actions are asynchronous inputs; operator-only envelope actions; agent context lint (CTX-012, CTX-013). |
 | XI. Lawful Market Conduct | PASS | PASS | Conduct checks in the order layer, restricted list with acknowledgments, outbound messages limited to owner accounts (CTX-015). |
 
@@ -195,7 +195,7 @@ At default route prices this is roughly 25 to 30 dollars of model spend per mont
 **CTX-011: Prediction registry, scoring and the prediction graph**
 - Derived from: SPEC-094 to SPEC-105, SPEC-153.
 - Memory: vantage commit-reveal design; owner's 2025 sealed-forecast protocol; R06 (Brier skill against markets, sample minimums, final-state resolution, market price at or before commit, logit pooling).
-- Design: canonical JSON plus salt is hashed with SHA-256; commitments chain by previous hash and sequence; reveals verify salt and content; scoring computes Brier, clipped log loss (clip 0.001), ten-bin calibration, expected calibration error and recalibration slope by logistic fit of outcome on logit probability; baselines include base rate, persistence, coin flip and market price; recalibration applies a fitted slope and intercept per seat when the slope stays under 0.8 after 200 outcomes; drivers and links are tables; propagation is a breadth-first walk; coherence rules check joint versus marginal bounds and sign conflicts; multiplicity across personas is controlled with Holm adjustment in skill claims (R05).
+- Design: canonical JSON plus salt is hashed with SHA-256; commitments chain by previous hash and sequence; reveals verify salt and content; scoring computes Brier, clipped log loss (clip 0.001), ten-bin calibration, expected calibration error and recalibration slope by logistic fit of outcome on logit probability; baselines include base rate, persistence, coin flip and market price; recalibration applies a fitted slope and intercept per seat when the slope stays under 0.8 after 200 outcomes; drivers and links are tables; propagation is a breadth-first walk; coherence rules check joint versus marginal bounds and sign conflicts; multiplicity across personas is controlled with Holm adjustment in skill claims (R05, SPEC-169); chain heads are anchored daily outside the firm's stores, by default as a signed commit to a separate anchors repository chosen by the operator (SPEC-174).
 - Trade-offs accepted: market matching is manual or rule-based per question template; unmatched questions score against the other baselines only.
 
 **CTX-012: Owner envelope, heat dials and actions**
@@ -232,8 +232,8 @@ Heats 1 to 7 follow R08's curve; 8 to 10 extend it for the partner mandate up to
 
 **CTX-015: Special situations and market integrity as scored detectors**
 - Derived from: SPEC-106 to SPEC-112, SPEC-080, SPEC-084.
-- Memory: owner's TexitCoin brief (indicators, scenario probabilities, ethics notes); R13 and R14 pending (literature and detection features).
-- Design: scheme score is a weighted checklist over evidence records; the hazard model maps net-inflow trend, its rate of change, withdrawal friction, operator diversion and liquidity into a daily hazard with stated inputs, calibrated on recorded cases; exits follow SPEC-108 with staged sizing; integrity flags use rule detectors on volume, depth, cancel rates, open interest and funding; conduct checks reject self-crossing, rapid large cancel patterns and coordinated cross-book orders.
+- Memory: owner's TexitCoin brief (indicators, scenario probabilities, ethics notes); R13 (regulatory record of the case study, clawback precedent, exit rule with recovery and clawback terms, liquidity arithmetic); R14 (venue quality, pump, spoof, sweep, cascade, depeg, launch, unlock and squeeze gates).
+- Design: scheme score is a weighted checklist over time-stamped evidence records (clean, watch, scheme); the hazard model maps net-inflow trend, its rate of change, withdrawal friction, operator diversion and liquidity into a daily hazard with an interval, calibrated on recorded cases; the exit rule holds while (1 - R) h + h lambda (G / B) stays below r - rho - c'/(1 - c), per SPEC-108; regulator orders hard-block live trading (SPEC-163); integrity detectors compute venue quality and adjusted volume (SPEC-164), pump flags, spoof-aware book features, sweep confirmation, the cascade and depeg gate (SPEC-165), launch, unlock and squeeze gates (SPEC-166, SPEC-167); conduct checks reject self-crossing, rapid large cancel patterns and coordinated cross-book orders.
 - Trade-offs accepted: detectors start rule-based and are scored like seats before any learned model replaces them.
 
 **CTX-016: Canonical firm definition and harness compilers**
@@ -257,11 +257,11 @@ Heats 1 to 7 follow R08's curve; 8 to 10 extend it for the partner mandate up to
 **CTX-019: Evaluator separation and validation**
 - Derived from: SPEC-156 to SPEC-162; constitution IV and IX.
 - Memory: spec-prep rule 3; R05 (ablations, sample floors, multiplicity); R03 (trial registry, overfitting probability).
-- Design: held-out evaluations live outside the repository; the build exposes an evaluator entry point (`bun run eval:serve` for fixtures supplied at runtime) without reading evaluator files; trial registry, deflated Sharpe and overfitting probability via combinatorial cross-validation; monthly ablations (no memory, no debate, no risk team) on replay.
+- Design: held-out evaluations live outside the repository; the build exposes an evaluator entry point (`bun run eval:serve` for fixtures supplied at runtime) without reading evaluator files; trial registry, deflated Sharpe and overfitting probability via combinatorial cross-validation; baselines and monthly ablations (no memory, no debate, no risk team) on replay (SPEC-168); memory frozen per replay window (SPEC-170); tribunal judgments run in both side orders with equal length budgets (SPEC-171); added stages stay off until they beat their parent on a holdout (SPEC-172).
 
 **CTX-020: Delivery gates**
 - Derived from: constitution IX; spec-prep task-gate contract.
-- Design: `.specify/gates/check-task-evidence.ts` parses `tasks.md` and `specs/001-autonomous-trading-firm/evidence/` and fails when a checked task lacks an evidence file with command, exit code and output digest; a pre-commit hook and the project Claude Code hooks run it; the patched validator runs in CI.
+- Design: `.specify/gates/check-task-evidence.py` parses `tasks.md` and `specs/001-autonomous-trading-firm/evidence/` and fails when a checked task lacks an evidence file with command, exit code and output digest; a pre-commit hook and the project Claude Code hooks run it; the patched validator runs in CI.
 
 **CTX-021: Retention, export and restore**
 - Derived from: SPEC-141, SPEC-154.
@@ -313,7 +313,7 @@ See CTX-018. Threats addressed: prompt injection from fetched content (envelope,
 ```text
 specs/001-autonomous-trading-firm/
 ├── intent.md            # human layer: goals, constraints, stories, prior art
-├── spec.md              # human layer: 162 clauses bound to held-out evaluations
+├── spec.md              # human layer: 174 clauses bound to held-out evaluations
 ├── plan.md              # this file (derived layer)
 ├── research.md          # Phase 0 decisions with sources
 ├── data-model.md        # entities, schema outline, state transitions
@@ -373,16 +373,16 @@ Phase and step notation only; each phase validates the clauses listed.
 - Phase 1 Setup: workspace, tooling, gates, legacy move. Validates SPEC-139 (configuration-only routes), constitution IX gates.
 - Phase 2 Foundation: core, storage, registry, ledger, chains, point-in-time store, calendars. Validates SPEC-001, SPEC-008, SPEC-013 (registry part), SPEC-018, SPEC-019, SPEC-032 to SPEC-035, SPEC-151, SPEC-153.
 - Phase 3 Firm runs on crypto (US1, MVP): data adapters for crypto, virtual market, plan compiler, risk gate, seat runner, routes, budget meter, research cycle, predictions, logs, local runtime, cloud Workflows and BookDesk. Validates SPEC-002 to SPEC-012, SPEC-021 to SPEC-031, SPEC-036 to SPEC-040, SPEC-043 to SPEC-076, SPEC-081 to SPEC-085, SPEC-092, SPEC-094 to SPEC-097, SPEC-113, SPEC-135 to SPEC-144.
-- Phase 4 Reports and learning (US2): daily, weekly, monthly, feasibility, education. Validates SPEC-114 to SPEC-121, SPEC-133.
+- Phase 4 Reports and learning (US2): daily, weekly, monthly, feasibility, education. Validates SPEC-114 to SPEC-121, SPEC-133, SPEC-173.
 - Phase 5 Owner portal and console (US3). Validates SPEC-122, SPEC-125 to SPEC-134.
 - Phase 6 Multi-asset (US4). Validates SPEC-026, SPEC-059, SPEC-066, SPEC-068, SPEC-071 extended to all classes.
-- Phase 7 Tribunal (US5). Validates SPEC-086 to SPEC-091, SPEC-093.
+- Phase 7 Tribunal (US5). Validates SPEC-086 to SPEC-091, SPEC-093, SPEC-171, SPEC-172.
 - Phase 8 Prediction graph and calibration (US6). Validates SPEC-098 to SPEC-105, SPEC-079.
-- Phase 9 Special situations and integrity (US7). Validates SPEC-106 to SPEC-112, SPEC-077, SPEC-080, SPEC-084.
+- Phase 9 Special situations and integrity (US7). Validates SPEC-106 to SPEC-112, SPEC-077, SPEC-080, SPEC-084, SPEC-163 to SPEC-167.
 - Phase 10 Harness compilers (US8). Validates SPEC-013 to SPEC-017, SPEC-020, SPEC-161.
 - Phase 11 Live path disabled (US9). Validates SPEC-145 to SPEC-150.
 - Phase 12 Personas, institution study, macro book (US10). Validates SPEC-043, SPEC-123, SPEC-124, SPEC-162.
-- Phase 13 Validation, evaluator handoff, deploy and readiness. Validates SPEC-041, SPEC-042, SPEC-152, SPEC-154 to SPEC-160.
+- Phase 13 Validation, evaluator handoff, deploy and readiness. Validates SPEC-041, SPEC-042, SPEC-152, SPEC-154 to SPEC-160, SPEC-168 to SPEC-170, SPEC-174.
 
 ## Complexity Tracking
 
@@ -560,3 +560,15 @@ Every specification clause, the component that implements it, its primary test k
 | SPEC-160 | THE system SHALL fail its validation suite when a planted future price row or ... | runtime validation, agents weights, compilers whitelist check | integration | CTX-019, CTX-013 |
 | SPEC-161 | THE system SHALL check automatically that every tool referenced by a seat's prompt or ... | runtime validation, agents weights, compilers whitelist check | integration | CTX-019, CTX-013 |
 | SPEC-162 | THE system SHALL weight seat opinions in committee summaries by scored out-of-sample track record ... | runtime validation, agents weights, compilers whitelist check | integration | CTX-019, CTX-013 |
+| SPEC-163 | IF a regulator order, warning or enforcement release names an asset, its issuer or ... | risk special situations and integrity gates, data venue quality | replay on recorded cases | CTX-015 |
+| SPEC-164 | THE system SHALL compute a quality score for each venue's reported volume and SHALL ... | risk special situations and integrity gates, data venue quality | replay on recorded cases | CTX-015 |
+| SPEC-165 | WHEN open interest and funding both exceed their trailing 90th percentiles for an asset, ... | risk special situations and integrity gates, data venue quality | replay on recorded cases | CTX-015 |
+| SPEC-166 | THE system SHALL treat newly launched tokens and unvetted micro-capitalization securities as ineligible for ... | risk special situations and integrity gates, data venue quality | replay on recorded cases | CTX-015 |
+| SPEC-167 | WHEN borrow cost and near-the-money call open interest both spike for a stock, or ... | risk special situations and integrity gates, data venue quality | replay on recorded cases | CTX-015 |
+| SPEC-168 | THE system SHALL report each strategy's results against buy-and-hold, equal-weight and moving-average crossover baselines, ... | runtime validation, replay harness | integration on replay | CTX-019 |
+| SPEC-169 | WHEN skill is claimed for any of several personas, seats or strategies tested together, ... | runtime validation, replay harness | integration on replay | CTX-019 |
+| SPEC-170 | WHEN a historical evaluation window starts, THE system SHALL freeze the memory and lessons ... | runtime validation, replay harness | integration on replay | CTX-019 |
+| SPEC-171 | THE system SHALL run each tribunal judgment in both side orders, score a flipped ... | tribunal protocol, predict holdout comparisons | integration | CTX-013, CTX-019 |
+| SPEC-172 | THE system SHALL keep any added tribunal round, driver class or link type disabled ... | tribunal protocol, predict holdout comparisons | integration | CTX-013, CTX-019 |
+| SPEC-173 | THE system SHALL include in each daily report two retrieval questions on concepts introduced ... | reports education | golden | CTX-014 |
+| SPEC-174 | THE system SHALL publish the head of every hash chain daily to a location ... | ledger and predict anchors, worker Verify workflow | integration | CTX-011, CTX-021 |

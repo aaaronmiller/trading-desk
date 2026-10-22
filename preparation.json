@@ -1,0 +1,231 @@
+{
+  "schemaVersion": 1,
+  "lifecycle": "specification-prepared",
+  "feature": "specs/001-autonomous-trading-firm",
+  "preparedAt": "2026-10-22T08:37:05Z",
+  "buildRoot": "aaaronmiller/trading-desk",
+  "branch": "001-autonomous-trading-firm",
+  "intake": "aaaronmiller/new-assignments: autonomous-trading-firm/ (branch autonomous-trading-firm-intake)",
+  "evaluationStore": {
+    "location": "intake autonomous-trading-firm/evaluator-only/evals.md (outside this repository)",
+    "sha256": "740c2e0930cca402de5ae7c74d85a487ea102c3876f6fdf76560115d90d6b994",
+    "isolation": "procedural only; the implementing agent must not open it"
+  },
+  "gates": [
+    {
+      "name": "constitution",
+      "status": "passed",
+      "observedAt": "2026-10-22T08:37:05Z",
+      "command": "python3 -I .specify/gates/check-constitution-sync.py",
+      "evidence": {
+        "capturedOutputSha256": "e7903a06f96e43ebdcb0fb51a7b5619d79943ec238b661898da92134fb1f19bb",
+        "excerpt": [
+          "Constitution sync gate passed (11 principles)."
+        ],
+        "notes": "Constitution v1.0.0 has 11 principles and no template placeholders; the CLAUDE.md copy matches byte for byte; the plan's Constitution Check lists each principle once with PASS."
+      }
+    },
+    {
+      "name": "prerequisites",
+      "status": "passed",
+      "observedAt": "2026-10-22T08:37:05Z",
+      "command": "SPECIFY_FEATURE_DIRECTORY=specs/001-autonomous-trading-firm bash .specify/scripts/bash/check-prerequisites.sh --json --require-tasks --include-tasks",
+      "evidence": {
+        "capturedOutputSha256": "104a758b15ce7156bc7066dc5a5adc0a0fc89f4242b499d8f0fa64e8241029f9",
+        "excerpt": [
+          "{\"FEATURE_DIR\":\"/home/user/trading-desk/specs/001-autonomous-trading-firm\",\"AVAILABLE_DOCS\":[\"research.md\",\"data-model.md\",\"contracts/\",\"quickstart.md\",\"tasks.md\"]}"
+        ]
+      }
+    },
+    {
+      "name": "analysis",
+      "status": "passed",
+      "observedAt": "2026-10-22T08:37:05Z",
+      "command": "speckit-analyze (read-only report) then cd specs/001-autonomous-trading-firm && python3 -I ../../.specify/gates/spec-prep-validate.py . --evals <external store>",
+      "evidence": {
+        "capturedOutputSha256": "8a31fa23e123d264b1854d405cf07a6989f834cf2426b0041dd50d0530d4cae2",
+        "excerpt": [
+          "self-armed denylist: 178 token(s) harvested from the derived layer",
+          "spec-prep validation PASSED: layers separated, clauses evaluable and bound to external evals, spec in contact with context, continuity present, level declared."
+        ],
+        "notes": "speckit-analyze reported 0 critical, 3 high, 2 medium, 4 low; high and medium remediated per ledger entry 033; validator passed after remediation with 51 harvested technology tokens armed; a planted-violation copy failed on separation, testability, eval binding and drift."
+      }
+    },
+    {
+      "name": "traceability",
+      "status": "passed",
+      "observedAt": "2026-10-22T08:37:05Z",
+      "command": "spec-prep-validate.py . --evals <external store> --trace ; spec-prep-validate.py --depth <sources> --against intent.md spec.md",
+      "evidence": {
+        "capturedOutputSha256": "74732fee7378514d4c45b439e731e6322f5e8a99ba87d29e8d90d66006745b7c",
+        "excerpt": [
+          "self-armed denylist: 178 token(s) harvested from the derived layer",
+          "",
+          "...",
+          "| SPEC-173 | EVAL-173 | intent section 8 (US2); EDU-01 | 2 |",
+          "| SPEC-174 | EVAL-174 | intent section 5; PRED-01, LEDGER-01 | 3 |",
+          "",
+          "spec-prep validation PASSED: layers separated, clauses evaluable and bound to external evals, spec in contact with context, continuity present, level declared."
+        ],
+        "depth": {
+          "capturedOutputSha256": "570803d7301cf0e2f70a0935fe9b45f4dadf91359b5f730b357b22aa6adccbab",
+          "excerpt": [
+            "requirement-like lines: source 84, output 222",
+            "DEPTH PASSED"
+          ]
+        },
+        "notes": "traceability.md maps 93 of 93 working requirements, 21 of 21 legacy clauses and 174 of 174 clauses to evaluations, decisions and tasks; average task description 108.9 words over 90 tasks."
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".specify/memory/constitution.md",
+      "sha256": "6e9f78564b19dcba4833609f2faf711c494759f929a87d4b7a63f1d867fa3330"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "f6f4469b54d6ce17b519a9bb4603a697eff81d5b3efe427d59d17f3423d976a3"
+    },
+    {
+      "path": "CLAUDE.md",
+      "sha256": "d635e1c88b9720f5597f0cb349ffd3f77c0625408e61dc01bd6ad7c3b98f2398"
+    },
+    {
+      "path": ".claude/settings.json",
+      "sha256": "df6d19644729ddfba2c9c4d871fca759759942015c6975ab89408c8931a14e57"
+    },
+    {
+      "path": "reset-handoff.md",
+      "sha256": "d840cb7656a93cb64f4d7bd2a04a257148caceb77235810d35435ca30a624a36"
+    },
+    {
+      "path": ".specify/gates/spec-prep-validate.py",
+      "sha256": "c4757ddb5827ed1119dbd2eeb44c54bd13877a3f15928714bb1a28fbb4f319c7"
+    },
+    {
+      "path": ".specify/gates/check-task-evidence.py",
+      "sha256": "bf012bdf8ddf9551cfd0680c8507f2cc50e7eb7eff5c19d11ed9501198bc2db4"
+    },
+    {
+      "path": ".specify/gates/hook-guard-commit.py",
+      "sha256": "c26edb0fd38c5a5e2bdbaf47d460d04dcff8be7d1f67933d03c9b33511cfda5d"
+    },
+    {
+      "path": ".specify/gates/verify-preparation.py",
+      "sha256": "8d9d1f410912791a7500e93fb0901811da4d47cae8aa86ce33616159f5a3d7f9"
+    },
+    {
+      "path": ".specify/gates/check-constitution-sync.py",
+      "sha256": "f2e0092112159c38b2627eece0b3da3b40115cff9f9a9616d1acd87b157de6e0"
+    },
+    {
+      "path": ".specify/gates/evidence-template.md",
+      "sha256": "7c94794f28f65aaeee1e740b388016747681cb8fc39860dd22f51a936013f1bb"
+    },
+    {
+      "path": "specs/001-autonomous-trading-firm/intent.md",
+      "sha256": "49c35c945269a52cdb8e81cf484b6b9c08cc65b0df729112eea6984f8d6d5218"
+    },
+    {
+      "path": "specs/001-autonomous-trading-firm/spec.md",
+      "sha256": "5b1628deea23a52cf6358d84313e0c343b4b6140048f38e3d98120f58e6cb6ac"
+    },
+    {
+      "path": "specs/001-autonomous-trading-firm/plan.md",
+      "sha256": "bcd91ab2f1ff4d5c989ee785b954c598599b474ca9e601ffce2dc7c69e818976"
+    },
+    {
+      "path": "specs/001-autonomous-trading-firm/research.md",
+      "sha256": "041f7dc188d2540f01827fbbc8882463210597d3fbaa6f8a7cecbd6a5626c747"
+    },
+    {
+      "path": "specs/001-autonomous-trading-firm/data-model.md",
+      "sha256": "6a776691872fb9fac6e948aaf85fa3fdd75a1a673777354783dec34703d6a407"
+    },
+    {
+      "path": "specs/001-autonomous-trading-firm/quickstart.md",
+      "sha256": "d75969ddeee1a50fb955a0661976004f932e55132f7f87cd2317b53085b480a0"
+    },
+    {
+      "path": "specs/001-autonomous-trading-firm/traceability.md",
+      "sha256": "a159d008e0a66d94151ccd28ef1c9cac64d5d7dadfbca1c94b475357cc0bd21a"
+    },
+    {
+      "path": "specs/001-autonomous-trading-firm/substrate.md",
+      "sha256": "173a8f42a3984537d29ed10b988450769ba94d788d560f3c4db1324546ab33a7"
+    },
+    {
+      "path": "specs/001-autonomous-trading-firm/checklists/requirements.md",
+      "sha256": "0939e1c0a45badcdeffc6b94bd9764c3ad2f59d1378b82dcb204c65138b8b8ff"
+    },
+    {
+      "path": "specs/001-autonomous-trading-firm/layer-allow.txt",
+      "sha256": "66889b49f7abcf7b543667f5ec3cfb654e7049e8cf4ba5c090f4e57068d619a6"
+    },
+    {
+      "path": "specs/001-autonomous-trading-firm/tech-tokens.txt",
+      "sha256": "c02340c903c5532a882ce2b9bc1362f02bb63dc309be29c66f8f0a9d91325380"
+    },
+    {
+      "path": "specs/001-autonomous-trading-firm/contracts/cycle-graph.md",
+      "sha256": "289d1b1f82b8246e6ae9d0cfb8654b3a4d9f0de5b1f8c229286bab8ff68b4787"
+    },
+    {
+      "path": "specs/001-autonomous-trading-firm/contracts/harness-capability-matrix.md",
+      "sha256": "7eed30ed97657013e96e8b74e3fdf4fcf4c5f18d1dcf8108f40b5f63f80e809e"
+    },
+    {
+      "path": "specs/001-autonomous-trading-firm/contracts/model-routes.md",
+      "sha256": "a191a623c885b556d82383c8242f4808c3900f5fb4f842a7ed108ac444d03add"
+    },
+    {
+      "path": "specs/001-autonomous-trading-firm/contracts/order-interface.md",
+      "sha256": "f6425e584a51c26cedea30f6b40b1b77883b72a3e03d9c0f9347dd8abff66099"
+    },
+    {
+      "path": "specs/001-autonomous-trading-firm/contracts/owner-api.md",
+      "sha256": "0c628067d7f4c9f85c01a29566979651054a811711afdbe75a0d41fdf038641e"
+    },
+    {
+      "path": "specs/001-autonomous-trading-firm/contracts/plan-language.md",
+      "sha256": "fee5a4a5280e24f05c4c788316774c5fbc1c10878811ef2165a863fa42da091e"
+    },
+    {
+      "path": "specs/001-autonomous-trading-firm/contracts/reports.md",
+      "sha256": "7807de5d8a6980f83f873abe15b9008d59008d01be098321d970854213e4ec05"
+    },
+    {
+      "path": "specs/001-autonomous-trading-firm/contracts/seat-definition.md",
+      "sha256": "9cef63c789d4b08003fe576e07866de475dafc9967b4f9d67a5fd346a7bd4616"
+    },
+    {
+      "path": "specs/001-autonomous-trading-firm/contracts/tool-catalog.md",
+      "sha256": "1e012b23efe747e671405b1997a4f8d4aac9129777c6ab305c65edab89dc079a"
+    },
+    {
+      "path": "specs/001-autonomous-trading-firm/tasks.md",
+      "sha256": "096a28eed6eea1828178602ba2a140f741611dcc6bfe3532d8609c4be28cae13",
+      "mutable": true
+    },
+    {
+      "path": "specs/001-autonomous-trading-firm/ledger/ledger.md",
+      "sha256": "ae0c437421300e1f4e5739827f7a857527bb725f864bd55feb05d03b0fe6f277",
+      "mutable": true
+    },
+    {
+      "path": "specs/001-autonomous-trading-firm/ledger/standing.md",
+      "sha256": "29abe17c8094cf45b1d6854378750d33d6927aac980569f879e5546e48d71236",
+      "mutable": true
+    }
+  ],
+  "initiation": {
+    "authority": "owner-launched fresh session using the restart prompt in reset-handoff.md",
+    "forbidden": [
+      "enable live trading",
+      "place real orders",
+      "handle exchange credentials",
+      "open the evaluation store from the implementing context"
+    ]
+  }
+}

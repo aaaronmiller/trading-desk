@@ -1,6 +1,6 @@
 ---
 date: 2026-10-21 15:40:00 UTC
-ver: 1.0.0
+ver: 1.2.0
 author: Aaron Miller (owner statements T1 to T9) compiled by Claude Code session; system-drafted, ratified by launching the build
 model: Claude (Claude Code session)
 tags: [intent, autonomous-trading-firm, constraints, personas, user-stories, prior-art]
@@ -29,7 +29,7 @@ Two owners get a self-running, around-the-clock investment firm of AI agents tha
 6. **Portability**: roles, skills and rules are markdown-first and work in any agent harness, at minimum Claude Code and Roo Code (T6), and do not depend on agent frameworks that bind them to a runtime; the owner named LangChain and LangSmith as examples to avoid (resource E).
 7. **Data**: free and keyless sources first; paid data only after a strategy shows it needs it and an owner raises the budget (R11 CO-22, C-16). Sources whose terms forbid automated use are excluded (R11 C-23).
 8. **Jurisdiction**: both owners are US persons; venue and data access follow from that, including read-only access where trading is unavailable to US persons (R11 CO-05).
-9. **Conduct**: the firm never manipulates markets and never promotes or recruits for any asset; suspected payout schemes stay restricted for live capital unless an owner lifts the restriction per asset with an acknowledgment of legal exposure (T9; system reading of clawback exposure, R13 pending) [INFERENCE].
+9. **Conduct**: the firm never manipulates markets and never promotes or recruits for any asset; suspected payout schemes stay restricted for live capital unless an owner lifts the restriction per asset with an acknowledgment of legal and clawback exposure, and any asset named in an active regulator order is blocked for live capital with no override (T9; system reading of clawback exposure and enforcement records, R13) [INFERENCE].
 10. **Model routes**: prompts never carry credentials or account identifiers; routes that may train on prompts carry only content without account identifiers (R11 C-27, owner decision D-15).
 11. **Formats**: every document carries the owners' frontmatter block, uses no em dashes and bumps its version on revision; code is complete with no placeholders (T8).
 
@@ -61,7 +61,7 @@ Two owners get a self-running, around-the-clock investment firm of AI agents tha
 2. **Model provider outage**: retry, fall back to an alternate route, otherwise skip the step; never record a partial decision as complete.
 3. **Budget exhaustion**: the capped seat pauses and the chief executive reallocates; at the firm ceiling, non-essential seats throttle first while risk, execution, records and reporting keep running.
 4. **Crash or restart at any point**: resume with nothing lost and nothing duplicated.
-5. **Book drawdown**: warn, then halve new risk, then stop new risk with a post-mortem; the house book's final stop (50 percent below its high-water mark by default) resumes only by the operator (addendum 2.1).
+5. **Book drawdown**: warn, then halve new risk, then stop new risk with a post-mortem; the house book's final stop is the tighter of its heat ladder and the owners' envelope stop (50 percent below its high-water mark by default, addendum 2.1), and only the operator resumes it.
 6. **Daily loss limit hit**: no new risk in that book until the next trading day.
 7. **Invalid or ungrounded plan**: rejected with reasons; nothing reaches the market.
 8. **Prompt injection in fetched content**: treated as text, flagged, never obeyed.
@@ -83,11 +83,11 @@ Two owners get a self-running, around-the-clock investment firm of AI agents tha
 ## 8. User stories
 
 Epic A: The firm runs itself
-- A1. As the operator, I want the firm to research, plan, execute and record around the clock without me, so that it earns a record while I build other things. Given a deployed firm and no owner activity, when a day passes, then at least 95 cycles complete with plans, fills, predictions and logs. Verified by SPEC-001 to SPEC-012, SPEC-021 to SPEC-030, SPEC-053 to SPEC-072, SPEC-094, SPEC-113, SPEC-135.
+- A1. As the operator, I want the firm to research, plan, execute and record around the clock without me, so that it earns a record while I build other things. Given a deployed firm and no owner activity, when a week passes, then at least 99 percent of scheduled cycles complete with plans, fills, predictions and logs. Verified by SPEC-001 to SPEC-012, SPEC-021 to SPEC-030, SPEC-053 to SPEC-072, SPEC-094, SPEC-113, SPEC-135.
 - A2. As the operator, I want staffing to change by performance, so that weak seats are revised or retired without me. Given a seat with a poor scored record, when the weekly review runs, then the chief executive records a revision or retirement with reasons and envelope limits stay untouched. Verified by SPEC-005, SPEC-025, SPEC-091, SPEC-162.
 
 Epic B: The owners learn
-- B1. As both owners, I want an educational daily report before the market opens, so that we understand each decision. Given a completed day, when 06:00 Pacific arrives, then the report exists with every section and every decision carries its five teaching elements. Verified by SPEC-114 to SPEC-120, SPEC-038, SPEC-039.
+- B1. As both owners, I want an educational daily report before the market opens, so that we understand each decision. Given a completed day, when 06:00 Pacific arrives, then the report exists with every section and every decision carries its five teaching elements. Verified by SPEC-114 to SPEC-120, SPEC-173, SPEC-038, SPEC-039.
 - B2. As the partner, I want a weekly honest answer on the 1 to 3 percent per day appetite, so that I can choose my risk with open eyes. Given 30 closed positions, when the weekly report runs, then it states required win rate, edge, attainment probabilities, required sizing and ruin risk with intervals. Verified by SPEC-121, SPEC-133.
 - B3. As both owners, I want to study how a major institution invests, so that we learn large-scale practice. Given a week, when the weekly report runs, then it includes an institution study note citing primary filings or documents. Verified by SPEC-123.
 
@@ -98,17 +98,17 @@ Epic C: The owners steer from outside
 - C4. As either owner, I want to pause the firm or a book, so that I can stop risk instantly. Given a pause, when the next release step runs, then nothing in scope is released. Verified by SPEC-011, SPEC-010.
 
 Epic D: The firm decides well and both ways
-- D1. As the partner, I want pro and con advocates on different models to debate serious targets with a third model judging, so that decisions survive real argument. Given a serious target, when the window closes, then a full four-round debate and a ruling with direction and conviction exist. Verified by SPEC-085 to SPEC-093.
+- D1. As the partner, I want pro and con advocates on different models to debate serious targets with a third model judging, so that decisions survive real argument. Given a serious target, when the window closes, then a full four-round debate and a ruling with direction and conviction exist. Verified by SPEC-085 to SPEC-093, SPEC-171, SPEC-172.
 - D2. As both owners, I want the firm to profit from falls as well as rises, so that a negative view is still a trade. Given a bearish ruling, when the plan compiles, then it uses an available short-side form with its costs. Verified by SPEC-059, SPEC-066.
 - D3. As both owners, I want each prediction linked to its drivers and to other predictions, so that the firm sees correlated bets and cascades. Given a driver resolution, when the next cycle runs, then dependents are flagged and shared-driver exposure stays capped. Verified by SPEC-102 to SPEC-105, SPEC-079.
 
 Epic E: The record is honest
-- E1. As both owners, I want every prediction sealed before its outcome and scored against markets and baselines, so that the track record carries weight. Given a prediction, when it resolves, then it is scored, compared and verifiable. Verified by SPEC-094 to SPEC-101, SPEC-153.
-- E2. As both owners, I want point-in-time integrity in every historical evaluation, so that backtests do not lie. Given a replay, when a future row is planted, then it never reaches a decision and the suite fails if it does. Verified by SPEC-031 to SPEC-042, SPEC-160.
+- E1. As both owners, I want every prediction sealed before its outcome and scored against markets and baselines, so that the track record carries weight. Given a prediction, when it resolves, then it is scored, compared and verifiable. Verified by SPEC-094 to SPEC-101, SPEC-153, SPEC-169, SPEC-174.
+- E2. As both owners, I want point-in-time integrity in every historical evaluation, so that backtests do not lie. Given a replay, when a future row is planted, then it never reaches a decision and the suite fails if it does. Verified by SPEC-031 to SPEC-042, SPEC-160, SPEC-168, SPEC-170.
 
 Epic F: Aggressive but not eaten
-- F1. As the partner, I want the firm to find and ride structural opportunities such as payout schemes with disciplined exits, so that the aggressive mandate has a method. Given a held scheme asset, when hazard passes the payout rate, then a staged exit within liquidity begins. Verified by SPEC-106 to SPEC-109, SPEC-084.
-- F2. As both owners, I want manipulation recognized and avoided, so that the firm feeds among sharks without being eaten. Given a flagged pump, when an entry is proposed within the window, then it is blocked. Verified by SPEC-110, SPEC-111.
+- F1. As the partner, I want the firm to find and ride structural opportunities such as payout schemes with disciplined exits, so that the aggressive mandate has a method. Given a held scheme asset, when hazard passes the payout rate, then a staged exit within liquidity begins. Verified by SPEC-106 to SPEC-109, SPEC-163, SPEC-084.
+- F2. As both owners, I want manipulation recognized and avoided, so that the firm feeds among sharks without being eaten. Given a flagged pump, when an entry is proposed within the window, then it is blocked. Verified by SPEC-110, SPEC-111, SPEC-164 to SPEC-167.
 
 Epic G: Portable and ready for live
 - G1. As the operator, I want any seat to run in Claude Code or Roo Code from the same files, so that the firm is not locked to one runtime. Given a canonical edit, when generation runs, then every harness file updates and drift checks pass. Verified by SPEC-013 to SPEC-020, SPEC-142.

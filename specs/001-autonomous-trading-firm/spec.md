@@ -1,6 +1,6 @@
 ---
 date: 2026-10-21 15:10:00 UTC
-ver: 1.0.0
+ver: 1.2.0
 author: Aaron Miller (owner statements) compiled by Claude Code session; system-drafted, ratified by launching the build
 model: Claude (Claude Code session)
 tags: [spec, autonomous-trading-firm, ears, eval-binding, contract, spec-kit]
@@ -26,11 +26,11 @@ The operator deploys the firm once. From then on a virtual chief executive and i
 
 **Why this priority**: every other capability (reports, steering, tribunals, calibration) needs a running firm with a record.
 
-**Independent Test**: start the firm on the local runtime against a recorded 48-hour crypto price tape; with no owner activity, at least 189 of 192 research cycles complete, every executed plan has a compiled structure, fills, wallet updates, committed predictions and log entries, and a restart injected mid-cycle loses and duplicates nothing.
+**Independent Test**: start the firm on the local runtime against a recorded 48-hour crypto price tape; with no owner activity, at least 191 of 192 research cycles complete, every executed plan has a compiled structure, fills, wallet updates, committed predictions and log entries, and a restart injected mid-cycle loses and duplicates nothing.
 
 **Acceptance Scenarios**:
 
-1. **Given** a deployed firm with no owner activity, **When** 24 hours pass, **Then** at least 95 research cycles are recorded complete, each with assessment, scope, bankroll, proposal, compiled plan or abstention, and prediction records. (EVAL-021, EVAL-022, EVAL-009)
+1. **Given** a deployed firm with no owner activity, **When** 7 days pass, **Then** at least 99 percent of the 672 scheduled research cycles (at most 6 missed) are recorded complete, each with assessment, scope, bankroll, proposal, compiled plan or abstention, and prediction records. (EVAL-021, EVAL-022, EVAL-009)
 2. **Given** an approved plan to buy a crypto asset, **When** the next price after the decision arrives, **Then** the virtual market fills at that price plus modeled costs and the book's wallet and running log update. (EVAL-063, EVAL-046, EVAL-113)
 3. **Given** a cycle interrupted after its predictions are committed and before its orders are released, **When** the firm restarts, **Then** the predictions exist once, the orders are released once, and no step repeats its side effects. (EVAL-135, EVAL-029)
 
@@ -507,8 +507,8 @@ Clauses use EARS phrasing. "The system" means the deployed firm including its ow
 - Eval: for each limit, an order just over it is blocked with a record and an order just under it passes.
 - Traces to: intent section 3; RISK-04
 
-**SPEC-077** [EVAL-077] WHEN a book falls below its high-water mark by its ladder levels, THE system SHALL warn at the first level, halve new risk at the second, and stop new risk with a post-mortem at the third; the house book's third level defaults to 50 percent and only the operator owner resumes it.
-- Eval: drive a book down through each level on a recorded tape; the three responses occur at their levels; resuming the stopped house book from a seat or the partner account is refused.
+**SPEC-077** [EVAL-077] WHEN a book falls below its high-water mark by its ladder levels, THE system SHALL warn at the first level, halve new risk at the second, and stop new risk with a post-mortem at the third; the house book's third level is the tighter of its heat ladder level and the envelope stop (default 50 percent below its high-water mark), and only the operator owner resumes it.
+- Eval: drive a book down through each level on a recorded tape; the three responses occur at their levels; at heat 8 the house book stops at its 35 percent ladder level, and with a heat ladder looser than the envelope it stops at 50 percent; resuming the stopped house book from a seat or the partner account is refused.
 - Traces to: intent section 6; RISK-05
 
 **SPEC-078** [EVAL-078] THE system SHALL change envelope ceilings only through the operator owner action of SPEC-010.
@@ -545,7 +545,7 @@ Clauses use EARS phrasing. "The system" means the deployed firm including its ow
 - Eval: every proposal in a recorded run has both cases with distinct authors.
 - Traces to: intent section 8 (US5); TRIB-01
 
-**SPEC-086** [EVAL-086] WHEN a proposal exceeds the tribunal conviction or size threshold, or an owner requests a tribunal, THE system SHALL open a tribunal before any order for it is released.
+**SPEC-086** [EVAL-086] WHEN a proposal exceeds the tribunal conviction or size threshold (defaults: conviction 0.7, or a position above 2 percent of book value), or an owner requests a tribunal, THE system SHALL open a tribunal before any order for it is released.
 - Eval: proposals above threshold and owner-requested ones get tribunal records before any order; below-threshold ones do not.
 - Traces to: intent section 8 (US5); TRIB-02
 
@@ -569,7 +569,7 @@ Clauses use EARS phrasing. "The system" means the deployed firm including its ow
 - Eval: after a recorded run with 20 resolved tribunals, per-judge and per-advocate scores exist and match recomputation from outcomes.
 - Traces to: intent section 5; TRIB-04
 
-**SPEC-092** [EVAL-092] THE system SHALL pass every proposal through a confidence gate, a review by a seat on a model family different from the proposer's, and the deterministic risk gate, in that order, and SHALL stop the proposal at the first veto.
+**SPEC-092** [EVAL-092] THE system SHALL pass every proposal through a confidence gate (default: calibrated probability that the thesis holds of at least 0.55), a review by a seat on a model family different from the proposer's, and the deterministic risk gate, in that order, and SHALL stop the proposal at the first veto.
 - Eval: proposals failing each gate stop there with the gate recorded; passing proposals show all three records in order with distinct families for proposer and reviewer.
 - Traces to: intent section 3; TRIB-05
 
@@ -629,7 +629,7 @@ Clauses use EARS phrasing. "The system" means the deployed firm including its ow
 
 #### 2.1.10 Special situations and market integrity
 
-**SPEC-106** [EVAL-106] THE system SHALL score assets on the configured scheme indicators (including payout promises above market rates, recruitment-linked rewards, unverifiable backing, operator history, withdrawal friction and capital diversion to new ventures) and SHALL store each score with its evidence.
+**SPEC-106** [EVAL-106] THE system SHALL score assets on the configured scheme indicators (including payout promises above market rates, recruitment-linked rewards, unverifiable backing, operator history, withdrawal friction and capital diversion to new ventures) and SHALL store each score with its evidence, classifying an asset as a scheme at the configured threshold (default 0.6 on a 0 to 1 scale).
 - Eval: on a recorded case set of 10 known schemes and 10 ordinary assets, every scheme scores above every ordinary asset at the configured threshold, and every score cites stored evidence.
 - Traces to: intent section 8 (US7); SCHEME-01
 
@@ -637,12 +637,12 @@ Clauses use EARS phrasing. "The system" means the deployed firm including its ow
 - Eval: for a held scheme asset in a recorded run, a daily hazard record with inputs exists for each day.
 - Traces to: intent section 8 (US7); SCHEME-01
 
-**SPEC-108** [EVAL-108] WHILE a scheme position is held, THE system SHALL keep it only while the expected daily payout exceeds the estimated daily hazard, and SHALL exit in stages sized to observed liquidity and withdrawal limits, starting early enough that the planned stages complete before the hazard estimate reaches twice the payout rate.
-- Eval: on a recorded scheme case with known collapse date, the exit begins when hazard crosses payout, every stage is within liquidity and withdrawal limits, and the plan's completion date precedes the doubled-hazard date.
+**SPEC-108** [EVAL-108] WHILE a scheme position is held, THE system SHALL keep it only while the expected daily payout exceeds the expected daily loss from collapse hazard (net of expected recovery), clawback exposure on gains already withdrawn, and withdrawal costs, and SHALL exit in stages sized to observed liquidity and withdrawal limits, starting early enough that the planned stages complete before that expected daily loss reaches twice the payout rate.
+- Eval: on a recorded scheme case with known collapse date, recovery fraction, clawback probability and withdrawal costs, the exit begins on the first day expected loss exceeds payout, every stage is within liquidity and withdrawal limits, and the planned completion precedes the doubled-loss date.
 - Traces to: intent section 8 (US7); SCHEME-02
 
-**SPEC-109** [EVAL-109] THE system SHALL place every asset whose scheme score crosses the threshold on the live restricted list automatically, and SHALL allow simulated positions in it only in books whose heat meets the configured minimum (default 7).
-- Eval: crossing the threshold adds the asset to the list; a heat-5 book's order for it is rejected in simulation; a heat-8 book's order fills.
+**SPEC-109** [EVAL-109] THE system SHALL place every asset whose scheme score crosses the threshold on the live restricted list automatically, and SHALL allow simulated positions in it only in books whose heat meets the configured minimum (default 9, the first heat whose eligibility tier includes payout schemes).
+- Eval: crossing the threshold adds the asset to the list; a heat-8 book's order for it is rejected in simulation; a heat-9 book's order fills.
 - Traces to: intent section 3; SCHEME-03
 
 **SPEC-110** [EVAL-110] THE system SHALL flag pump-and-dump activity, wash-traded volume, spoofing patterns and liquidation cascades from market data, and SHALL block new entries in a flagged instrument for the configured window (default 60 minutes after the last flag).
@@ -691,9 +691,9 @@ Clauses use EARS phrasing. "The system" means the deployed firm including its ow
 - Eval: every concept linked in a recorded week's reports has a glossary entry created on or before first use; the weekly report names the week's lesson topics.
 - Traces to: intent section 8 (US2); EDU-01
 
-**SPEC-121** [EVAL-121] THE system SHALL publish a target-feasibility report weekly and on owner request stating, from the firm's own record: the win rate required for 1, 2 and 3 percent per day at current payoff ratios and trade frequency, realized edge, probability of averaging each target over 30 and 90 days at current sizing, the sizing each target would require, and risk of ruin at current and required sizing, each with an interval.
+**SPEC-121** [EVAL-121] THE system SHALL publish a target-feasibility report weekly and on owner request stating, from the firm's own record: the win rate required for 1, 2 and 3 percent per day at current payoff ratios and trade frequency, realized edge, probability of averaging each target over 30 and 90 days at current sizing, the sizing each target would require, risk of ruin at current and required sizing, and the daily value-at-risk budget equivalent to each target, each with an interval.
 - Eval: on a recorded trade record, every figure matches an independent recomputation within 0.5 percentage points and every figure carries an interval.
-- Traces to: intent sections 1, 5; RISK-02
+- Traces to: intent sections 1, 5; RISK-01, RISK-02
 
 **SPEC-122** [EVAL-122] WHEN an owner requests a report on a topic or asset, THE system SHALL deliver it in the deep research format of SPEC-039 with its sources.
 - Eval: an owner request produces a report with the nine sections and stored sources.
@@ -869,6 +869,56 @@ Clauses use EARS phrasing. "The system" means the deployed firm including its ow
 - Eval: committee summaries show weights matching scored records; a heavily weighted seat's opinion never changes a limit outcome.
 - Traces to: intent section 8; ORG-08
 
+#### 2.1.17 Refinements from adversarial review and current practice
+
+**SPEC-163** [EVAL-163] IF a regulator order, warning or enforcement release names an asset, its issuer or its operator, THEN THE system SHALL block every live order in that asset with no owner override, and SHALL label simulated positions in it as subject to that order.
+- Eval: with live enabled on recorded venue responses, an asset with a recorded regulator order stays blocked even after an operator acknowledgment; simulated positions in it carry the order label.
+- Traces to: intent section 3 constraint 9; SCHEME-03
+
+**SPEC-164** [EVAL-164] THE system SHALL compute a quality score for each venue's reported volume and SHALL use quality-adjusted volume in every liquidity, sizing and signal calculation.
+- Eval: on a recorded wash-volume tape, adjusted volume falls below reported volume by the venue's estimated fake share, and sizing reads adjusted volume.
+- Traces to: intent section 6 failure 10; MANIP-01
+
+**SPEC-165** [EVAL-165] WHEN open interest and funding both exceed their trailing 90th percentiles for an asset, or its spread exceeds the configured multiple of its trailing median (default 3), or its mark price diverges from its index beyond the configured limit (default 100 basis points), or a collateral asset deviates from an independent reference beyond the configured limit (default 100 basis points), THE system SHALL cap gross leverage and block new leveraged entries in the affected asset or collateral until the condition clears.
+- Eval: on the recorded cascade tape the gate engages within one minute of the condition and releases after it clears; a planted collateral deviation suspends that collateral.
+- Traces to: intent section 6; MANIP-01
+
+**SPEC-166** [EVAL-166] THE system SHALL treat newly launched tokens and unvetted micro-capitalization securities as ineligible for live orders until they pass the configured launch and listing checks, and SHALL block new long entries within the configured window (default 7 days) before a scheduled token unlock above the configured share of circulating supply (default 5 percent).
+- Eval: a recorded launch that fails the checks is ineligible for live orders; an entry 3 days before a 10 percent unlock is blocked.
+- Traces to: intent section 6; MANIP-01
+
+**SPEC-167** [EVAL-167] WHEN borrow cost and near-the-money call open interest both spike for a stock, or its short interest and days-to-cover exceed configured thresholds (defaults: 20 percent of float and 5 days), THE system SHALL block new short entries in it.
+- Eval: a recorded squeeze setup blocks a new short; ordinary conditions allow it.
+- Traces to: intent section 6; DIR-01, RISK-04
+
+**SPEC-168** [EVAL-168] THE system SHALL report each strategy's results against buy-and-hold, equal-weight and moving-average crossover baselines, and SHALL run monthly replay ablations without memory, without debate and without the risk team, reporting each difference.
+- Eval: the monthly report shows three baselines and three ablation differences per active strategy.
+- Traces to: intent section 5; QA-01
+
+**SPEC-169** [EVAL-169] WHEN skill is claimed for any of several personas, seats or strategies tested together, THE system SHALL adjust significance for multiple comparisons and report resampling intervals with each claim.
+- Eval: with twenty personas tested together, claims use adjusted significance; a persona significant only before adjustment carries no skill claim.
+- Traces to: intent section 5; PRED-02
+
+**SPEC-170** [EVAL-170] WHEN a historical evaluation window starts, THE system SHALL freeze the memory and lessons available to seats at the window start and record which items each decision retrieved.
+- Eval: lessons created during the window never appear in that window's decisions; every decision lists its retrieved items.
+- Traces to: intent section 6; QA-03, QA-04
+
+**SPEC-171** [EVAL-171] THE system SHALL run each tribunal judgment in both side orders, score a flipped verdict as a tie, give both advocates equal length budgets, and record each judge's flip rate and length sensitivity.
+- Eval: a recorded tribunal is judged in both orders; a planted flip scores as a tie; unequal budgets are refused; flip rate and length sensitivity are recorded per judge.
+- Traces to: intent section 8 (US5); TRIB-02, TRIB-04
+
+**SPEC-172** [EVAL-172] THE system SHALL keep any added tribunal round, driver class or link type disabled until it improves out-of-sample Brier score over its parent configuration on a time-split holdout.
+- Eval: an added round that fails to improve stays disabled; one that improves is enabled with its comparison recorded.
+- Traces to: intent section 5; GRAPH-03
+
+**SPEC-173** [EVAL-173] THE system SHALL include in each daily report two retrieval questions on concepts introduced on earlier days, schedule spaced review of glossary entries, and present each new opportunity as an idea note with thesis, valuation sensitivities, bull, base and bear cases, dated catalysts, risks and falsifiers.
+- Eval: every daily report has two retrieval questions on concepts first used at least two days earlier; every idea note has all seven parts; glossary entries reappear on the review schedule.
+- Traces to: intent section 8 (US2); EDU-01
+
+**SPEC-174** [EVAL-174] THE system SHALL publish the head of every hash chain daily to a location outside the firm's own stores, and verification SHALL compare stored heads with the published ones.
+- Eval: a daily anchor exists for each chain; an altered record yields a recomputed head that mismatches the published anchor.
+- Traces to: intent section 5; PRED-01, LEDGER-01
+
 ### 2.2 Key entities
 
 - **Owner**: one of two human accounts (operator, partner) outside the organization; holds envelope powers per SPEC-010.
@@ -894,6 +944,7 @@ Clauses use EARS phrasing. "The system" means the deployed firm including its ow
 - **Budget meter and call record**: per seat and firm, with thresholds and the eight call fields of SPEC-143.
 - **Change event**: owner envelope action with prior and new values and actor.
 - **Incident**: missed heartbeats, reconciliation breaks, chain divergences and their resolutions.
+- **Chain anchor**: a published chain head with its time and external location, compared during verification.
 
 ## 3. Success Criteria
 
@@ -923,7 +974,7 @@ Clauses use EARS phrasing. "The system" means the deployed firm including its ow
 
 ## 5. Eval index
 
-Every clause binds one held-out evaluation with the same number: SPEC-001 binds EVAL-001 through SPEC-162 binding EVAL-162. Payloads (fixtures, planted faults, expected values) live in the external evaluator store recorded in `reset-handoff.md`; the implementing agent does not open them.
+Every clause binds one held-out evaluation with the same number: SPEC-001 binds EVAL-001 through SPEC-174 binding EVAL-174. Payloads (fixtures, planted faults, expected values) live in the external evaluator store recorded in `reset-handoff.md`; the implementing agent does not open them.
 
 | Range | Capability | Stored at |
 |-------|------------|-----------|
@@ -943,3 +994,4 @@ Every clause binds one held-out evaluation with the same number: SPEC-001 binds 
 | EVAL-145 to EVAL-150 | Live path, disabled by default | external evaluator store |
 | EVAL-151 to EVAL-155 | Ledger and audit | external evaluator store |
 | EVAL-156 to EVAL-162 | Validation and promotion | external evaluator store |
+| EVAL-163 to EVAL-174 | Refinements: regulator orders, venue quality, cascade and depeg, launches and unlocks, squeezes, baselines and ablations, multiplicity, memory freeze, judge order, complexity budget, retrieval practice, external anchors | external evaluator store |
