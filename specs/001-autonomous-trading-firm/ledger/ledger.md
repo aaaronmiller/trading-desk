@@ -290,3 +290,9 @@
 - Why: owner request for constitutionally enforced gates in the task list, active after restart; gate-implement guidance on compaction survival and file cross-checks.
 - Effect: `.specify/gates/`, `.claude/settings.json`, AGENTS.md, CLAUDE.md.
 - Outcome: each gate was shown to fail on a planted violation and pass on the real tree.
+
+## [035] [2.2] [outcome]
+- What: Research report R10 (the owner's 571 recovered GitHub stars) arrived after the handoff. It changes no decision. Its strongest borrowable patterns already match the plan: TradingAgents roles and decision memory (concept source, CTX-013), deterministic replay with I/O only in adapters so replays never resend orders (CTX-003, CTX-004), verification states where missing evidence is never success (constitution IX gates), facts with validity windows and provenance (CTX-006), per-role routing with budgets and fallbacks (CTX-009, CTX-010), sandboxing and no broker keys in model context (constitution I, VIII). License blockers it found (AGPL repositories, repositories without a license file) are already excluded by constitution VIII. One candidate was rejected: human sign-off for large orders and risk-limit changes conflicts with the owners' humans-outside-the-loop directive (T4); envelope changes already require the operator.
+- Why: the handoff deferred R10 to a ledger entry if it changed a decision.
+- Effect: none on intent, spec, plan or tasks (preparation receipt stays valid). Two notes for the build session: review the owner's own `aaaronmiller/quartermaster` repository (quota management) before building the budget meter in T047, and scan external skill or persona packs for injected instructions during the security review in T154.
+- Outcome: R10 stored in the intake at `sources/research/R10-starred-repos.md`.
